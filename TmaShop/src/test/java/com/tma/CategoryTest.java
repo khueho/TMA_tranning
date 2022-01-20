@@ -1,23 +1,17 @@
 package com.tma;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tma.dao.CategoryDao;
 import com.tma.entity.Category;
-import org.junit.Assert;
-
 @SpringBootTest
-class TmaShopApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
+public class CategoryTest {
 	@Autowired
 	private CategoryDao categorydao;
 	
@@ -29,6 +23,18 @@ class TmaShopApplicationTests {
 				categorydao.save(category);
 				assertNotNull(categorydao.findById(2L).get());
 	}
-
 	
+	@Test
+	public void updateCategoryTest() {
+		Category category = categorydao.findById(2L).get();
+		category.setName("tau dien");
+		categorydao.save(category);
+				assertNotEquals("xe dien", categorydao.findById(2L).get().getCategoryId());
+	}
+	
+	@Test
+	public void deleteCategoryTest() {
+		categorydao.deleteById(3L);
+		assertThat(categorydao.existsById(3L));
+	}
 }

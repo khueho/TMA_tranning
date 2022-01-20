@@ -6,5 +6,5 @@ import com.tma.entity.Account;
 import com.tma.entity.Product;
 
 public interface AccountDao  extends JpaRepository<Account, String>{
-
+	
 }
